@@ -1,0 +1,423 @@
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SURFCOMP - Sybyl Proteins Tutorial</title>
+    <link href="../surfcomp.css" media="screen" rel="stylesheet" type="text/css"/></head>
+  <body>
+  <h1 class="title">
+    <img src="../img/logo_left.png" width="64" border="0" align="middle">
+    The SURFCOMP program suite
+    <img src="../img/logo_right.png" width="64" border="0" align="middle"></h1>
+
+  <hr/>
+
+  <table cellspacing="5" cellpadding="10">
+    <tr>
+      <td bgcolor="#c5e4ff" valign="top" width="200">
+        <p>
+          <a href="../index.html">Home</a></p>
+        <p>
+          <a href="../authors.html">Authors</a></p>
+        <p>
+          <a href="../download.html">Download</a><br/>
+          <a href="../install.html">Installation Instructions</a></p>
+        <p>
+          <a href="../literature.html">Literature</a><br/>
+          Documentation:<br/>
+          &nbsp;&nbsp;<a href="../userdoc.html">User documentation</a><br/>
+          &nbsp;&nbsp;<a href="../gallery.html">Image Gallery</a><br/>
+          &nbsp;&nbsp;<a href="../tutorials_main.html">Tutorials</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<strong>Sybyl Proteins</strong></br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="sybyl_ligands.html">Sybyl Ligands</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="msms_ligands.html">MSMS Ligands</a></p>
+        <p>
+          </p>
+        </td>
+
+      <td valign="top">
+        <p>
+          In this tutorial you will learn how to use the SPL Surfcomp scripts to generate
+          molecular surfaces for protein structures taken from a PDB file, how to select
+          active site centers and how to prepare the surface comparison experiments.</p>
+        <p>
+          We assume that you have already started Sybyl 6.91 and initialized the Surfcomp
+          scripts with
+          </p>
+        <div class="code">
+          SYBYL> startDuck</div>
+
+        <ol>
+          <li>
+            <a href="sybyl_proteins.html#dirs">Preparation of the Input Data</a></li>
+          <li>
+            <a href="sybyl_proteins.html#prepmols">Prepare Protein Structures</a></li>
+          <li>
+            <a href="sybyl_proteins.html#selcenter">Selection of the active site centers</a></li>
+          <li>
+            <a href="sybyl_proteins.html#surfgeneration">Generation of the Molecular Surfaces</a></li>
+          <li>
+            <a href="sybyl_proteins.html#second">Preparation of the Second Molecule</a></li>
+          <li>
+            <a href="sybyl_proteins.html#preparesurfcomp">Preparation of the Experiment</a></li>
+          <li>
+            <a href="sybyl_proteins.html#run">Tailoring the <code>run.sh</code> Script</a></li></ol>
+
+        <h2>
+          <a name="dirs"></a>
+          1. Preparation of the Input Data</h2>
+        <p>
+          For the <code>preparesurfcomp</code> script used in
+          <a href="sybyl_proteins.html#preparesurfcomp">step 5</a> the input data must be stored in a special
+          directory structure. To do this create a new subdirectory in
+          <code>TUTORIAL_HOME</code> called <code>input</code>. And make this directory
+          your <em>data directory</em> with the command:</p>
+
+        <div class="command">
+          Surfcomp &gt;&gt; Select data directory ... <br/>
+          select <code>TUTORIAL_HOME/input</code></div>
+
+        <h2>
+          <a name="prepmols"></a>
+          2. Prepare Molecules</h2>
+        <p>
+          Download the tutorial data <a href="data/sybyl_protein_data.tar.gz">
+          sybyl_protein_data.tar.gz</a> and unpack its contents in the
+          <code>input/pdb_data</code> directory. This provides you with the PDB structure
+          files of SAP (1D4W) and EAT-2 (1I3Z) in complex with the signaling peptide
+          pSLAM. We will now import the PDB files, setup the proper hydrogen and charges
+          and extract present ligand structures.</p>
+
+        <ol>
+          <li>
+            Let us start with the SAP protein. Call the Surfcomp protein reader dialog
+            <div class="command">
+              Surfcomp &gt;&gt; Prepare Structure ... <br/>
+              select <code>pdb_data/1D4W.pdb</code> as PDB file <br/>
+              select the molecular area <code>M1</code><br/>
+              select <code>SAP_1D4W</code> as name</div>
+            <p class="img">
+              <img src="img/sybyl_proteins_sapread.png" border="0"><br/></p>
+            <p class="caption">
+              <a name="protein_read_dlg"></a>
+              Figure 2.1: The protein read dialog</p>
+
+            <p>
+              When you press enter the protein is loaded into the first molecular area and
+              the view is focused on its center.</p></li>
+
+          <li>
+            The next step in the structure preparation is the finishing of the protein
+            structure and the extraction of any ligands. The corresponding dialog pops up
+            immediately after the structure has been loaded. In this dialog first
+
+            <div class="command">
+              check '<code>Remove Water</code>'<br/>
+              check '<code>Add Hydrogens to protein</code>'<br/>
+              check '<code>Add Charges to protein</code></div>
+
+            <p>
+              This will remove all the crystal water molecules, since they will change the
+              proteins surface and it will add hydrogens and charges to the protein (which
+              are necessary for the surface calculation and comparison).</p>
+
+            <p>
+              In the same dialog you can select ligand substructures, which can be
+              extracted into a different molecular area. To do this</p>
+
+            <div class="command">
+              press the buttom next to <code>Ligand</code> field and select the 
+              substructures:<br/>
+              &nbsp;&nbsp;SER277 LEU278 THR279 ILE280 PTR1 ALA282 GLN283 VAL284 GLN285 
+              LYS286<br/>
+              keep the '<code>Ligand Area</code>' M2</div>
+
+            <p class="img">
+              <img src="img/sybyl_proteins_sapfinish.png" border="0"></p>
+            <p class="caption">
+              Figure 2.2: The protein finish dialog</p>
+
+            <p>
+              Pressing OK will add the charges and hydrogens and move the ligand structure 
+              in the M2 area. The protein is now ready for surface generation.
+              </p></li></ol>
+
+        <h2>
+          <a name="selcenter"></a>
+          3. Selection of the Active Site Centers</h2>
+
+        <p>
+          When the protein structure has been imported successfully and the ligand has
+          been extracted into a different molecular area, you can start to select the
+          site-spheres that define the regions you want to investigate by SURFCOMP. Define
+          these spheres at the position of atoms on the SLAM ligand. For that purpose we
+          suggest that you change the color of the ligand area (should be M2) to atomic
+          colors and hide the atomic structure of the protein. Then call the selection 
+          dialog with </p>
+        <div class="command">
+          Surfcomp &gt;&gt; Define Site Center ...</div>
+        <p class="img">
+          <a name="site_selection_dlg"></a>
+          <img src="img/site_selection_dlg.png" border="0"></p>
+        <p class="caption">
+          Figure 3.1: The site selection dialog</p>
+        <p>
+          In this dialog the buttons on the upper left corner are used to add, edit and
+          delete site spheres. The table that covers the upper right part contains the
+          data of all defined sites, including the position of the center, the radius
+          and the name. A default radius can be set in the text field below the list.
+          <span class="attention">Note that the site centers are valid until you prepare
+          a new structure as described in <a href="sybyl_proteins.html#prepmols">step 2</a>.</span></p>
+        <p>
+          You should now add the following four atoms (see below) on the SLAM peptide as
+          site sphere centers by clicking the <code>Add</code> button on the dialog and
+          then selecting the atom with a mouse click. The coordinates of the selected atom
+          are then added to the table as a site center of a new sphere with the default
+          radius and an initial name. The name is important since it serves as an ID for 
+          corresponding sites on different surfaces in the generation of the experiments 
+          in <a href="sybyl_proteins.html#preparesurfcomp">step 6</a>.</p>
+        <p class="img">
+          <img src="img/1D4W_centers.png" border="0"></p>
+        <p class="caption">
+          Figure 3.2: Site centers considered in the comparison of the SAP and EAT-2. All
+          centers are atoms of the SLAM peptide.</p>
+        <p>
+          With the <code>Edit</code> button you can change the position of the center, the
+          radius and the name of a site sphere. Rename all sites according to the table in
+          <a href="sybyl_proteins.html#site_selection_dlg">Figure 3.1</a> and the last one to <code>
+          VAL</code> by</p>
+        <div class="command">
+          Select a site sphere in the table,<br/>
+          press <code>Edit</code> and<br/>
+          rename the site sphere</div>
+        <p class="img">
+          <img src="img/site_selection_edit.png" border="0"></p>
+        <p class="caption">
+          Figure 3.3: Changing a site sphere.</p>
+        <p>
+          When you are finished with the site selection press <code>OK</code> on the site
+          selection dialog. Nothing will change on the display until you save the prepared
+          structure. Then all site centers will be added as dummy atoms to the protein
+          structure.</p>
+
+        <h2>
+          <a name="surfgeneration"></a>
+          4. Generation of the Molecular Surfaces</h2>
+
+        <p>
+          We will now generate the surfaces for the prepared protein structure.</p>
+        <ol>
+          <li>
+            Open the surface generation dialog:
+            <div class="command">
+              Surfcomp &gt;&gt; Generate Surface ...</div></li>
+          <li>
+            In the dialog <br/>
+            <div class="command">
+              select the protein (area M1)
+              change <code>Surface type</code> to <b>Fast Connolly</b><br/>
+              check '<code>structure is a protein</code>'</div>
+            <p class="img">
+              <img src="img/sybyl_proteins_surfgen.png" border="0"></p>
+            <p class="caption">
+              Figure 4.1: Settings in the surface generation dialog</p>
+            <div class="command">
+              press <code>OK</code></div>
+            <p>
+              The generation of the protein surface will take some time. The process is
+              finished when the Sybyl menu bar is accessible again. The result will be a
+              set of files in different subdirectories of
+              <code>TUTORIAL_HOME/input</code>:</p>
+            <div class="code">
+              % ls -R input<br/>
+              [...]<br/>
+              ./center:<br/>
+              SAP_1D4W-FAST_CONNOLLY-3.0.txt<br/><br/>
+              ./data:<br/>
+              SAP_1D4W-FAST_CONNOLLY-3.0.dat<br/><br/>
+              ./own:<br/>
+              SAP_1D4W-FAST_CONNOLLY-3.0.own<br/><br/>
+              ./pdb:<br/>
+              SAP_1D4W-FAST_CONNOLLY-3.0.pdb
+              </div></li>
+          <li>
+            Finally you should save the prepared structure together with the site centers.
+            To do this choose
+            <div class="command">
+              Surfcomp &gt;&gt; Save prep. Structure ...</div>
+            <p>
+              You will be asked for a <code>mol2</code> and <code>pdb</code> directory. If
+              you have set the <code>TUTORIAL_HOME/input</code> directory as your data
+              directory (<a href="sybyl_proteins.html#dirs">step 1</a>) you can take the default values.</p>
+            <p>
+              In the following procedure the protein and ligand will be stored in a single
+              MOL2 file and in two PDB files. In addition a dummy atom will appear in
+              the protein structure for any site center you have defined.</p>
+              </li></ol>
+
+        <h2>
+          <a name="second"></a>
+          5. Preparation of the Second Molecule</h2>
+
+        <p>
+          For every other molecule you have to repeat step <a href="sybyl_proteins.html#prepmols">2</a>,
+          <a href="sybyl_proteins.html#selcenter">3</a> and <a href="sybyl_proteins.html#surfgeneration">4</a>. But if the
+          problem is suitable to it you can align all other proteins to the protein
+          structure of the first (or any other) molecule in the PDB read procedure as
+          follows.</p>
+
+        <ol>
+          <li>
+            You have to load a reference structure (let us choose SAP, as we have saved it
+            before). Load the file <code>mol2/SAP_1D4W.mol2</code> into a molecular area
+            above M2 (e.g. M3). If you like you can zap the ligand area.</li>
+          <li>
+            In the protein read dialog (<a href="sybyl_proteins.html#protein_read_dlg">Figure 2.1</a>)
+            <div class="command">
+              select <code>pdb_data/1I3Z.pdb</code> as PDB file <br/>
+              select the molecular area <code>M1</code><br/>
+              select <code>EAT2_1I3Z</code> as name<br/>
+              check '<code>Align with Reference Structure</code>'
+              </div>
+            and press <code>OK</code>.</li>
+          <li>
+            <ol type="a">
+              <li>
+                You are now asked to select the residues in the reference molecule.
+                <div class="command">
+                  Select "M3(({A/MET1:LYS104})-{LYS104})" (Chain A of the reference SAP
+                  except the terminal LYS104)</div></li>
+              <li>
+                Next select the residues in the target (fitted) sequence:<//p>
+                <div class="command">
+                  Select "M1({A/MET1:ARG103})" (Chain A of the new molecule)</div></li>
+              <li>
+                Finally select which atoms should be used for the superposition.
+                <div class="command">
+                  Select "M3({SIDECHAIN})" (use sidechain atoms only)</div>
+                Use the sidechain atoms only because of the character of molecular
+                surfaces which are most dependent from the outer parts of a molecule.
+                </li></ol></li></ol>
+        <p>
+          The rest of the procedure for EAT-2 is according to the steps
+          <a href="sybyl_proteins.html#prepmols">2</a>, <a href="sybyl_proteins.html#selcenter">3</a> and
+          <a href="sybyl_proteins.html#surfgeneration">4</a>. Please be sure to name the corresponding
+          selection sites exactly like those in SAP to allow an automatic setup of the
+          single comparison experiments in the <a href="sybyl_proteins.html#preparesurfcomp">next step</a>.
+          </p>
+        <p>
+          You can save the protein pair in the correct alignment for later investigations.
+          </p>
+        <div class="command">
+          Zap all <br/>
+          Surfcomp &gt;&gt; Prepare Experiment ... <br/>
+          Choose SAP_1D4W.mol2<br/>
+          Choose EAT2_1I3Z.mol2<br>
+          Save as 'experiment.mol2'</div>
+        <p>
+          This will arrange the two proteins and ligands in a way to view them with a
+          <code>HALF</code> display, where the first protein (SAP) appears on the right
+          side and the other one (EAT-2) on the left.</p>
+
+        <h2>
+          <a name="preparesurfcomp"></a>
+          6. Preparation of the Experiment</h2>
+        <p>
+          The last step in the preparation protocol is the creation of the experiment
+          database and the shell script that can be used to invoke the calculation. For
+          that purpose you can use the <code>preparesurfcomp</code> script.</p>
+        <p>
+          You will now invoke the script in a way to setup an experiment for each
+          corresponding pair of selection spheres on the surfaces. This will create 4
+          experiments, one for the <code>N_term</code>, the <code>THR</code>, the
+          <code>PO4</code> and the <code>VAL</code> selection sphere.</p>
+        <p>
+          <code>preparesurfcomp</code> needs information about the database server, the
+          database user ID and password, the name of the experiment group and the size
+          of the surface patches in the surface comparison run. So when you change to
+          the <code>TUTORIAL_HOME</code> directory and type </p>
+        <div class="code">
+          % preparesurfcomp -h <font color="darkGreen">MYSQL_SERVER</font> -u
+          <font color="darkGreen">MYSQL_USERID </font>--path=input -g sybyl_proteins_tut
+          -r 4.0</div>
+        <p>
+          an experiment database with the name <code>sybyl_proteins_tut</code> should be
+          created on the <code>MYSQL_SERVER</code> using the user
+          <code>MYSQL_USERID</code>. (<span class="attention">If the <code>MYSQL_USERID
+          </code> is password protected, you have to give the additional option flag
+          <code>-p</code>. The script will then prompt for a password.</span>)<br/>
+          The lack of the <code>-f</code> parameter tells the script to avoid a full 
+          surface comparison since this would last very long and would cover also the 
+          uninteresting parts of the surface. </p>
+        <p>
+          If you search the current directory you will now find a shell script called
+          <code>run.sh</code> this script starts the surface similarity search for all
+          experiments in the group. In the <a href="sybyl_proteins.html#run">next step</a> you will learn how
+          this file has to be modified to fit to your needs.</p>
+
+        <h2>
+          <a name="run"></a>
+          7. Tailoring the <code>run.sh</code> Script</h2>
+        <p>
+          If you take a look at the run script it contains a lot of variables, which
+          control the surface similarity search. The important parameters are summarized
+          in two blocks:
+          </p>
+        <ol>
+          <li>
+            The filtering parameters:<br>
+            <code>
+              CPCUTOFF=1<br>RLEVEL=0.6<br>FUZZYTOL=0.3<br>MINDIST=0.5<br>TOLERANCE=1.0<br>
+              ANGLE=15</code><br>
+            They are described in detail in
+            [<a href="../literature.html#Hofbauer2004">1</a>,
+            <a href="../literature.html#Hofbauer2004b">2</a>]. For proteins you usually
+            have to loose the filter criterion a little bit. </li>
+          <li>
+            The data columns. These three variables specify which columns in the surface
+            data files should be taken for the
+            <ul>
+              <li>
+                critical point detection <code>CPCOL</code></li>
+              <li>
+                harmonic shape image comparison <code>HSICOL</code></li>
+              <li>
+                fuzzy filtering <code>FUZZYCOL</code>.</li></ul>
+            The columns are specified as bitvectors so that multiple selections of columns
+            are possible. For each selected column <code>i</code>, the corresponding bit
+            <code>i</code> must be set. To find the right values for the columns look at
+            the header of one of the data files in <code>TUTORIAL_HOME/input/data</code>
+            and set the variables as follows:
+            <ul>
+              <li>
+                The critical point detection needs always the two canonical curvatures
+                (lc_1.0_1 and lc_1.0_2), so set <code>CPCOL=12</code> (column 2 + 3 =
+                2<sup>2</sup> + 2<sup>3</sup> = 12).
+                </li>
+              <li>
+                For the harmonic shape image comparison a shape property is needed. You
+                can use the lc_1.0 property, so set <code>HSICOL=16</code> (column 4 =
+                2<sup>4</sup> = 16)</li>
+              <li>
+                To successfully perform a chemical prescreening, the fuzzy filer needs a
+                chemical surface property. The only one available in our example is the
+                ESP (ep), so set <code>FUZZYCOL=1</code> (column 0 = 2<sup>0</sup> = 1)
+                </li></ul></li></ol>
+
+        Finally the two blocks of variables in your <code>run.sh</code> script should look like:
+        <div class="code">
+          <font color="darkGreen">CPCUTOFF</font>=2<br/>
+          <font color="darkGreen">RLEVEL</font>=0.5<br/>
+          <font color="darkGreen">FUZZYTOL</font>=0.6<br/>
+          <font color="darkGreen">MINDIST</font>=0.5<br/>
+          <font color="darkGreen">TOLERANCE</font>=2.0<br/>
+          <font color="darkGreen">ANGLE</font>=15<br/>
+          <br/>
+          <font color="darkGreen">CPCOL</font>=12<br/>
+          <font color="darkGreen">FUZZYCOL</font>=16<br/>
+          <font color="darkGreen">DUCKCOL</font>=1</div></td>
+    </tr></table>
+    <hr/>
+	<p class="author">
+	  created by <a href="http://teachme.tuwien.ac.at/surfcomp/tutorials/chofbaue@qpsr03.tuwien.ac.at">Christian Hofbauer</a>
+	  - last change: 06.09.2004</p></body></html>
+

@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SURFCOMP - doc - msmsprepare</title>
+    <link href="../surfcomp.css" media="screen" rel="stylesheet" type="text/css"/></head>
+  <body>
+  <h1 class="title">
+    <img src="../img/logo_left.png" width="64" border="0" align="middle">
+    The SURFCOMP program suite
+    <img src="../img/logo_right.png" width="64" border="0" align="middle"></h1>
+
+  <table cellspacing="5" cellpadding="10">
+    <tr>
+      <td bgcolor="#c5e4ff" valign="top" width="200">
+        <p>
+          <a href="../index.html">Home</a></p>
+        <p>
+          <a href="../authors.html">Authors</a></p>
+        <p>
+          <a href="../download.html">Download</a><br/>
+          <a href="../install.html">Installation Instructions</a></p>
+        <p>
+          <a href="../literature.html">Literature</a><br/>
+          Documentation:<br/>
+          &nbsp;&nbsp;<a href="../userdoc.html">User documentation</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="msmsprepare.html">msmsprepare</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="preparesurfcomp.html">preparesurfcomp</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<strong>surfaceconvert</strong><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfcomp.html">surfcomp</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfinfo.html">surfinfo</a><br/>
+          <br/>
+          &nbsp;&nbsp;<a href="../tutorials_main.html">Tutorials</a><br/>
+          &nbsp;&nbsp;<a href="../gallery.html">Image Gallery</a></p>
+        <p>
+          </p>
+        </td>
+
+      <td valign="top">
+
+<h1 align=center>surfaceconvert</h1>
+<a href="surfaceconvert.html#NAME">NAME</a><br>
+<a href="surfaceconvert.html#SYNOPSIS">SYNOPSIS</a><br>
+<a href="surfaceconvert.html#DESCRIPTION">DESCRIPTION</a><br>
+<a href="surfaceconvert.html#OPTIONS">OPTIONS</a><br>
+<a href="surfaceconvert.html#DIAGNOSTICS">DIAGNOSTICS</a><br>
+<a href="surfaceconvert.html#AUTHOR">AUTHOR</a><br>
+
+<hr>
+<!-- Creator     : groff version 1.17.2 -->
+<!-- CreationDate: Tue Aug  3 17:51:01 2004 -->
+<a name="NAME"></a>
+<h2>NAME</h2>
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+convert - surface file format conversion</td></table>
+<a name="SYNOPSIS"></a>
+<h2>SYNOPSIS</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>surfaceconvert [ -h -d ] [ -i</b>
+<i>&lt;INFILE&gt;</i><b>] [ -o</b> <i>&lt;OUTFILE&gt;</i>
+<b>]</b> <i>&lt;INPUT_FORMAT&gt;
+&lt;OUTPUT_FORMAT&gt;</i></td></table>
+<a name="DESCRIPTION"></a>
+<h2>DESCRIPTION</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>surfaceconvert</b> is the file format conversion tool of
+the libsurface library. It automatically converts between
+all surface file formats available in the libsurface
+library. Which file formats are actually available, depends
+on the installed library version. A call of <b>surconvert
+-h</b> will provide you with a list of available file
+formats.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+The tool expects a surface definition in the
+<i>INPUT_FORMAT</i> from either stdin or the specified
+<i>INFILE</i> and writes a surface in the
+<i>OUTPUT_FORMAT</i> to either stdout or the specified
+<i>OUTFILE.</i> It is furthermore possible to scan the input
+surface for duplicated surface points (i.e. points that have
+the same 3D coordinates) (option</td></table>
+<a name="OPTIONS"></a>
+<h2>OPTIONS</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+-h</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+print a short help message</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+-d</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+turn on the doublett checking and remove all duplicated
+points.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+-i</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+the name of the input file. (if not specified stdin is used
+as input)</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+-o</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+the name of the output file. (if not specified stdout is
+used as input)</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+The options have to be followed by the name of the input
+file format and the name of the output file
+format.</td></table>
+<a name="DIAGNOSTICS"></a>
+<h2>DIAGNOSTICS</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+The <b>surfaceconvert</b> program uses the following exit
+codes:</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>0</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+everything went just fine</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>1</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+the program detected problems during the file input. These
+can either be caused by a misspelled filename or by the fact
+that the input is not formatted in the input
+format.</td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+<b>2</b></td></table>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="21%"></td><td width="79%">
+error during the output generation. This is most probably
+caused by a bad filename.</td></table>
+<a name="AUTHOR"></a>
+<h2>AUTHOR</h2>
+
+<table width="100%" border=0 rules="none" frame="void"
+       cols="2" cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="10%"></td><td width="90%">
+Christian Hofbauer
+&lt;christian.hofbauer@pharma.novartis.com&gt;</td></table>
+
+        </td>
+    </tr></table>
+    <hr/>
+	<p class="author">
+	  created by <a href="http://teachme.tuwien.ac.at/surfcomp/doc/chofbaue@qpsr03.tuwien.ac.at">Christian Hofbauer</a>
+	  - last change: 06.09.2004</p></body></html>

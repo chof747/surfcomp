@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SURFCOMP - doc - msmsprepare</title>
+    <link href="../surfcomp.css" media="screen" rel="stylesheet" type="text/css"/></head>
+  <body>
+  <h1 class="title">
+    <img src="../img/logo_left.png" width="64" border="0" align="middle">
+    The SURFCOMP program suite
+    <img src="../img/logo_right.png" width="64" border="0" align="middle"></h1>
+
+  <table cellspacing="5" cellpadding="10">
+    <tr>
+      <td bgcolor="#c5e4ff" valign="top" width="200">
+        <p>
+          <a href="../index.html">Home</a></p>
+        <p>
+          <a href="../authors.html">Authors</a></p>
+        <p>
+          <a href="../download.html">Download</a><br/>
+          <a href="../install.html">Installation Instructions</a></p>
+        <p>
+          <a href="../literature.html">Literature</a><br/>
+          Documentation:<br/>
+          &nbsp;&nbsp;<a href="../userdoc.html">User documentation</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<strong>msmsprepare</strong><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="preparesurfcomp.html">preparesurfcomp</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfaceconvert.html">surfaceconvert</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfcomp.html">surfcomp</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfinfo.html">surfinfo</a><br/>
+          <br/>
+          &nbsp;&nbsp;<a href="../tutorials_main.html">Tutorials</a><br/>
+          &nbsp;&nbsp;<a href="../gallery.html">Image Gallery</a></p>
+        <p>
+          </p>
+        </td>
+
+      <td valign="top">
+
+<p><a name="__index__"></a></p>
+<ul>
+
+  <li><a href="msmsprepare.html#name">NAME</a></li>
+  <li><a href="msmsprepare.html#synopsis">SYNOPSIS</a></li>
+  <li><a href="msmsprepare.html#options">OPTIONS</a></li>
+  <li><a href="msmsprepare.html#description">DESCRIPTION</a></li>
+  <ul>
+
+    <li><a href="msmsprepare.html#propertycalculation">PROPERTY-CALCULATION</a></li>
+  </ul>
+
+  <li><a href="msmsprepare.html#references">REFERENCES</a></li>
+</ul>
+
+<hr />
+
+<p>
+</p>
+<h1><a name="name"></a>NAME</h1>
+<p>msmsprepare</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis"></a>SYNOPSIS</h1>
+<p>A script that prepares MSMS surfaces and surface data files from PDB files</p>
+<p><strong>msmsprepare [ --help --man|m ]</strong>
+                  <strong>--pdb|i</strong> <em>PDBFILE</em>
+                  <strong>--path|o</strong> <em>DATAPATH</em>
+                  <strong>--format|f</strong> <em>OUTPUT_SURFACE_FILE_FORMAT</em>
+                  <strong>--probe</strong> <em>PROBE_RADIUS</em> <strong>--density|d</strong> <em>POINT_DENSITY</em>
+                  <strong>--cutoff|c</strong> <em>GLOBAL_CURVATURE_CUTOFF</em>
+                  <strong>--occupancy</strong> <em>OCCUPANCY_PROPERTY</em></p>
+<p>
+</p>
+<hr />
+<h1><a name="options"></a>OPTIONS</h1>
+<dl>
+<dt><strong><a name="item__2d_2dhelp"></a>--help</strong><br />
+</dt>
+<dd>
+print out this help page.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dman"></a>--man</strong><br />
+</dt>
+<dd>
+print out a detailed help page as manpage
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dpath__5bdefault_3d_2e_5d"></a>--path [default=<em>.</em>]</strong><br />
+</dt>
+<dd>
+The path where the generated data files will be stored. (see also
+<a href="preparesurfcomp.html#input_data_structure">
+  preparesurfcomp ("INPUT DATA STRUCTURE")</a>)
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dformat__5bdefault_3down_5d"></a>--format [default=<em>own</em>]</strong><br />
+</dt>
+<dd>
+The file format of the generated surface file. Possible values are off, msms
+and sld. Please note that the specification of the format determines the name
+of the directory where the surface files are written.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dprobe__5bdefault_3d1_2e4_angs_2e_5d"></a>
+  --probe [default=<em>1.4 Angs.</em>]</strong><br />
+</dt>
+<dd>
+The size of the probe sphere that was used to create the molecular
+surfaces. This parameter is for information purposes only and can be left as is
+or set to any value if no solvent accessible surfaces have been used.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2ddensity_7cd__5bdefault_3d3_2f_square_angs_2e"></a>
+  --density|d [default=<em>3/ square Angs.</em>]</strong><br />
+</dt>
+<dd>
+The point density of the generated surface file
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dcutoff_7cc__5bdefault_3d1_2e0_5d"></a>
+  --cutoff|c [default=<em>1.0</em>]</strong><br />
+</dt>
+<dd>
+The range cutoff applied in the neighborhood selection of the global curvature
+calculation. (see also [Zachmann1992])
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2doccupancy__5bdefault_3desp_5d"></a>
+  --occupancy [default=<em>esp</em>]</strong><br />
+</dt>
+<dd>
+The meaning of the occupancy value in the pdb file. The default value is <strong>esp</strong>
+which means that the occupancy field should contain partial charges for each
+atom.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="description"></a>DESCRIPTION</h1>
+<p>The <strong>msmsprepare</strong> script takes a special formed PDB file, generates molecular
+surfaces with the program MSMS [Sanner1995] and calculates various property
+values for all the points on the surface. The script writes the files into a
+data structure which is appropriate for the <a href="preparesurfcomp.html">
+preparesurfcomp(1)</a> script.</p>
+<p>The program expects a special PDB file where a property value and the atoms'
+van der Waals radii are stored for each atom directly after the x, y and z
+coordinate at the places of the <em>occupancy</em> and <em>tempFactor</em> variables. The
+radii are taken as input for the MSMS program while the values stored in the
+<em>occupancy</em> column are taken as a distinct atom-spectifc chemical property. If
+you use the default (<em>esp</em>) the occupance column (right after the z
+coordinate) should contain the atomic point charges.</p>
+<p>
+</p>
+<h2><a name="propertycalculation"></a>PROPERTY-CALCULATION</h2>
+<p>At the moment the following properties can be calculated for the molecular
+surfaces:</p>
+<dl>
+<dt><strong><a name="item_curvature"></a>
+  global/local curvature (CC1, CC2, STI)</strong><br />
+</dt>
+<dd>
+The global and local curvature is calculated according to the algorithm given
+by Zachmann et. al. and uses a 
+<a href="msmsprepare.html#item__2d_2dcutoff_7cc__5bdefault_3d1_2e0_5d"><strong>cutoff</strong></a>
+to select only a distinct neighborhood
+around a point for the curvature calculation.
+</dd>
+<p></p>
+<dt><strong><a name="item_potential"></a>electrostatic potential (ESP)</strong><br />
+</dt>
+<dd>
+Calculates the electrostatic potential using Coloumbs law. To get reasonable
+results the atomic point charges should be given as the <em>occupancy</em> values of
+the PDB file.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="references"></a>REFERENCES</h1>
+<p>M.F. Sanner et. al., <em>Fast and Robust Computation of Molecular Surfaces</em>,
+Proc. 11th ACM Symp. Comp. Geom., <strong>C6-C7</strong>, 1995.</p>
+<p>C.D. Zachmann et. al., <em>Topological Analysis of Complex Molecular Surfaces</em>,
+J. Comp. Chem., <strong>13:1</strong>, 76-84, 1992.</p>
+
+
+        </td>
+    </tr></table>
+    <hr/>
+	<p class="author">
+	  created by <a href="http://teachme.tuwien.ac.at/surfcomp/doc/chofbaue@qpsr03.tuwien.ac.at">Christian Hofbauer</a>
+	  - last change: 06.09.2004</p></body></html>
+

@@ -1,0 +1,52 @@
+body              { background-color:white; }
+p                 { text-align:justify; }
+li                { text-align:justify; }
+dd                { text-align:justify; }
+td                { text-align:justify; }
+
+p.img             { padding-top:1ex;
+                    padding-bottom:1ex;
+                    margin-bottom:0ex;
+                    margin-left:3ex;
+                    margin-right:3ex;
+                    text-align:center;
+                    border-top:1px solid black; }
+p.caption         { margin-left:3ex;
+                    margin-right:3ex;
+                    margin-bottom:2ex;
+                    padding-left=2ex;
+                    padding-right=2ex;
+                    font-size:-1;
+                    border-top:1px solid black;
+                    border-bottom:1px solid black; }
+p.author          { margin-top:0;
+                    font-size:8pt; 
+                    text-align:left;}
+
+div.code          { padding:8pt;
+                    font-family:monospace;
+                    background-color:#ffffdd;
+                    text-align:left; }
+div.command       { padding:8pt;
+                    font-family:helvetica;
+                    color:#800000; }
+
+
+h1.title          { text-align:center; font-family:helvetica; background-color: #c5e4ff; }
+a                 { color: #0000A0 }
+a:visited         { color: #9e0000 }
+
+.logo             { font-family:monospace; font-weight:bold; font-size:larger; }
+
+.list             { vertical-align:top; border-top:2px solid white; text-align:justify; }
+th.list           { background-color:#c5e4ff; text-align:center; vertical-align:middle; }
+td.list-selection { background-color:#ffe4c5; border-top:10px solid white;}
+
+.software         { color:c08000; }
+.software:before  { content:url("img/software.gif"); }
+.hint             { font-style:italic; }
+.hint:before      { content:url("img/hint.gif"); }
+.attention        { font-style:italic; }
+.attention:before { content:url("img/attention.gif"); }
+
+div.announce      { text-align:center; padding-top:1ex; padding-bottom:1ex; }

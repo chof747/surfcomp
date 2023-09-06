@@ -1,0 +1,291 @@
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SURFCOMP - MSMS tutorial</title>
+    <link href="../surfcomp.css" media="screen" rel="stylesheet" type="text/css"/></head>
+  <body>
+  <h1 class="title">
+    <img src="../img/logo_left.png" width="64" border="0" align="middle">
+    The SURFCOMP program suite
+    <img src="../img/logo_right.png" width="64" border="0" align="middle"></h1>
+
+  <hr/>
+
+  <table cellspacing="5" cellpadding="10">
+    <tr>
+      <td bgcolor="#c5e4ff" valign="top" width="200">
+        <p>
+          <a href="../index.html">Home</a></p>
+        <p>
+          <a href="../authors.html">Authors</a></p>
+        <p>
+          <a href="../download.html">Download</a><br/>
+          <a href="../install.html">Installation Instructions</a></p>
+        <p>
+          <a href="../literature.html">Literature</a><br/>
+          Documentation:<br/>
+          &nbsp;&nbsp;<a href="../userdoc.html">User documentation</a><br/>
+          &nbsp;&nbsp;<a href="../gallery.html">Image Gallery</a><br/>
+          &nbsp;&nbsp;<a href="../tutorials_main.html">Tutorials</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="sybyl_proteins.html">Sybyl Proteins</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="sybyl_ligands.html">Sybyl Ligands</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<strong>MSMS Ligands</strong></p>
+        <p>
+          </p>
+        </td>
+
+      <td valign="top">
+        <p>
+          In this tutorial you will generate molecular surfaces from PDB files and
+          calculate their surface properties. You will than use these data to setup an
+          experimental database and prepare the shell script to run the calculations.
+          Finally, you will run the surface comparison search locally.</p>
+
+        <ol>
+          <li>
+            <a href="msms_ligands.html#dataprep">Data Preparation</a></li>
+          <li>
+            <a href="msms_ligands.html#dirs">Generation of the Directory Structure</a></li>
+          <li>
+            <a href="msms_ligands.html#msmsprepare">Generation of the Molecular Surfaces</a></li>
+          <li>
+            <a href="msms_ligands.html#preparesurfcomp">Preparation of the Experiment</a></li>
+          <li>
+            <a href="msms_ligands.html#run">Tailoring the <code>run.sh</code> Script</a></li></ol>
+
+        <h2>
+          <a name="dataprep"></a>
+          1. Data Preparation</h2>
+        <p>
+          To prepare the molecular surfaces and experimental input data via MSMS PDB files
+          with special data columns are necessary. The preparation of this files is out of
+          scope of this tutorial but we will now give a short description of the
+          modifications that are necessary in the <strong><code>ATOM</code></strong> and
+          <strong><code>HETATM</code></strong> entries:</p>
+        <ul>
+          <li>
+            The <font color="darkRed">first eight</font> columns must be filled according to the
+            <a href="http://www.rcsb.org/pdb/docs/format/pdbguide2.2/guide2.2_frame.html">
+            PDB file format specification</a>. (<span class="hint">leave them as they
+            are</span>)</li>
+          <li>
+            The <font color="darkRed">ninth</font> column must contain atomic data that
+            is suitable to construct a molecular field. (For the moment) these can be only
+            atomic point charges to construct an electrostatic potential (ESP).</li>
+          <li>
+            The <font color="darkRed">ninth</font> column must contain the Van der Waals
+            radii of the single atoms. These radii are necessary to construct the
+            molecular surface with MSMS. You can use the <code>pdb_to_xyzr</code> and
+            <code>pdb_to_xyzrn</code> helper scripts of MSMS to get suitable VdW radii.
+            </li>
+          <li>
+            The <font color="darkRed">remaining</font> columns can be left as they are.
+            </li></ul>
+
+        <p class="img">
+          <img src="../img/pdb.png" width="581" height="215" border="0"></p>
+        <p class="caption">
+          Figure 1.1: Necessary modifications in the <strong><code>ATOM</code></strong>
+          and <strong><code>HETATM</code></strong> entries of PDB files</p>
+        <p>
+          The prepared PDB files for this tutorial are available from the file
+          <a href="data/msms_small_data.tar.gz">msms_small_data.tar.gz</a>. Please unpack
+          this file into an empty directory (herein called <code>TUTORIAL_HOME</code>)
+          using the commands:</p>
+
+        <div class="code">
+          % cd <font color="darkGreen">TUTORIAL_HOME</font><br/>
+          % gunzip msms_small_data.tar.gz<br/>
+          % tar fx msms_small_data.tar</div>
+
+        The structure files are now prepared and we can proceed with the next step.
+
+        <h2>
+          <a name="dirs"></a>
+          2. Generation of the Directory Structure</h2>
+        <p>
+          For the <code>preparesurfcomp</code> script used in
+          <a href="msms_ligands.html#preparesurfcomp">step 4</a> the input data must be stored in a special
+          directory structure. To do this create a new subdirectory in
+          <code>TUTORIAL_HOME</code> called <code>input</code> with subdirectories called:
+          <code>center, data, pdb, own</code>.</p>
+
+        <div class="code">
+          % mkdir input<br/>
+          % mkdir intput/center<br/>
+          % mkdir input/data<br/>
+          % mkdir input/msms<br/>
+          % mkdir input/pdb</div>
+
+        <p>
+          Now the directories are ready to store the molecular surface information
+          generated in the next steps. What is stored in which directory is described in
+          the <a href="../doc/preparesurfcomp.html">preparesurfcomp man page</a>.</p>
+
+        <h2>
+          <a name="msmsprepare"></a>
+          3. Generation of the Molecular Surfaces</h2>
+        <p>
+          When the PDB files are ready and the directory structure has been set up
+          properly you can generate the molecular surfaces with MSMS. Use the
+          script <code>msmsprepare</code> for this step. This script needs information
+          about the location of the PDB file, the output path, how the surface and its
+          properties should be calculated and in which format these data should be stored.
+          In the present case you must only specify the name of the pdb files and the 
+          output directory (<code>TUTORIAL_HOME/input</code> because every other 
+          parameter can be used with its default value. For a detailed description look at
+          the <a href="../doc/msmsprepare.html">msmsprepare man page</a>.</p>
+
+        <div class="code">
+          % msmsprepare --pdb=1THL.pdb --path=input<br/>
+          % msmsprepare --pdb=1TMN.pdb --path=input</div>
+
+        <p>
+          This should generate the surface files for the structures 1THL and 1TMN. If you
+          list the subdirectories of <code>input</code> you should get the following
+          list:</p>
+        <div class="code">
+          % ls -R input<br/>
+          input:<br>
+          center&nbsp;&nbsp;data&nbsp;&nbsp;msms&nbsp;&nbsp;pdb<br>
+          <br>
+          input/center:<br>
+          <br>
+          input/data:<br>
+          1THL_MSMS_3.0.dat&nbsp;&nbsp;1TMN_MSMS_3.0.dat<br>
+          <br>
+          input/msms:<br>
+          1THL_MSMS_3.0.msms&nbsp;&nbsp;1TMN_MSMS_3.0.msms<br>
+          <br>
+          input/pdb:<br>
+          1THL_MSMS_3.0.pdb&nbsp;&nbsp;1TMN_MSMS_3.0.pdb<br></div>
+
+        <h2>
+          <a name="preparesurfcomp"></a>
+          4. Preparation of the Experiment</h2>
+        <p>
+          The last step in the preparation protocol is the creation of the experiment
+          database and the shell script that can be used to invoke the calculation. For
+          that purpose you can use the <code>preparesurfcomp</code> script which examines
+          the <code>input</code> directory and builds the database for the experiment and
+          a shell-script, which can start the calculation.</p>
+        <p>
+          As you have created only two surfaces a single experiment will
+          be added to the experimental database and executed by the generated shell
+          script. In the <a href="sybyl_proteins.html">Sybyl Proteins</a> tutorial you can
+          find a way to produce experiments for each pair of site spheres defined on your
+          surfaces.</p>
+        <p>
+          <code>preparesurfcomp</code> is invoked once for each input directory and needs
+          information about the database server, the database user ID and password, the
+          name of the experiment group and the size of the surface patches in the surface
+          comparison run. So when you type </p>
+        <div class="code">
+          % preparesurfcomp -h <font color="darkGreen">MYSQL_SERVER</font> -u
+          <font color="darkGreen">MYSQL_USERID </font>--path=input -g msms_ligands_tut
+          -f -r 4.0</div>
+        <p>
+          an experiment database with the name <code>msms_ligands_tut</code> should be
+          created on the <code>MYSQL_SERVER</code> using the user
+          <code>MYSQL_USERID</code>. (<span class="attention">If the <code>MYSQL_USERID
+          </code> is password protected, you have to give the additional option flag
+          <code>-p</code>. The script will then prompt for a password.</span>)<br/>
+          The <code>-f</code> parameter tells the script to generate a full surface
+          comparison for each pair of surfaces besides the comparisons for each pair of
+          active sites.</p>
+        <p>
+          If you search the current directory you will now find a shell script called
+          <code>run.sh</code> this script starts the surface similarity search for all
+          experiments in the group. In the <a href="msms_ligands.html#run">next step</a> you will learn how
+          this file has to be modified to fit to your needs.</p>
+
+        <h2>
+          <a name="run"></a>
+          5. Tailoring the <code>run.sh</code> Script</h2>
+        <p>
+          If you take a look at the run script it contains a lot of variables, which 
+          control the surface similarity search. The important parameters are summarized
+          in two blocks:
+          </p>
+        <ol>
+          <li>
+            The filtering parameters:<br>
+            <code>
+              CPCUTOFF=1<br>RLEVEL=0.6<br>FUZZYTOL=0.3<br>MINDIST=0.5<br>TOLERANCE=1.0<br>
+              ANGLE=15</code><br>
+            They are described in detail in
+            [<a href="../literature.html#Hofbauer2004">1</a>,
+            <a href="../literature.html#Hofbauer2004b">2</a>]. (<span class="hint">In a
+            first guess you can always use the default values. They will give you good
+            results in most of the cases or a first hint where to start tailoring.</span>
+            </li>
+          <li>
+            The data columns. These three variables specify which columns in the surface
+            data files should be taken for the
+            <ul>
+              <li>
+                critical point detection <code>CPCOL</code></li>
+              <li>
+                harmonic shape image comparison <code>HSICOL</code></li>
+              <li>
+                fuzzy filtering <code>FUZZYCOL</code>.</li></ul>
+            The columns are specified as bitvectors so that multiple selections of columns
+            are possible. For each selected column <code>i</code>, the corresponding bit
+            <code>i</code> must be set. To find the right values for the columns look at
+            the header of one of the data files in <code>TUTORIAL_HOME/input/data</code>
+            and set the variables as follows:
+            <ul>
+              <li>
+                The critical point detection needs always the two canonical curvatures
+                (CC1 and CC2), so set <code>CPCOL=3</code> (column 0 + 1 =
+                2<sup>0</sup> + 2<sup>1</sup> = 3).
+                </li>
+              <li>
+                For the harmonic shape image comparison a shape property is needed. You
+                can use the STI property, so set <code>HSICOL=4</code> (column 2 =
+                2<sup>2</sup> = 4)</li>
+              <li>
+                To successfully perform a chemical prescreening, the fuzzy filer needs a
+                chemical surface property. The only one available in the example is the
+                ESP, so set <code>FUZZYCOL=8</code> (column 3 = 2<sup>3</sup> = 8)</li></ul>
+                </li></ol>
+
+        Finally the two blocks of variables in your <code>run.sh</code> script should look
+        like:
+        <div class="code">
+          <font color="darkGreen">CPCUTOFF</font>=1<br/>
+          <font color="darkGreen">RLEVEL</font>=0.6<br/>
+          <font color="darkGreen">FUZZYTOL</font>=0.3<br/>
+          <font color="darkGreen">MINDIST</font>=0.5<br/>
+          <font color="darkGreen">TOLERANCE</font>=1.0<br/>
+          <font color="darkGreen">ANGLE</font>=15<br/>
+          <br/>
+          <font color="darkGreen">CPCOL</font>=3<br/>
+          <font color="darkGreen">FUZZYCOL</font>=8<br/>
+          <font color="darkGreen">DUCKCOL</font>=4</div>
+
+       <p>
+         If you invoke the script know it will start the <code>surfcomp</code> program,
+         which will produce a set of files starting with
+         <code>esp_1THL_MSMS_3.0-1TMN_MSMS_3.0</code> with the result stored in
+         <code>esp_1THL_MSMS_3.0-1TMN_MSMS_3.0.xml</code>.</p>
+
+       <div class="code">
+         % ./run.sh<br/>
+         % ls -1 esp_1THL_MSMS_3.0-1TMN_MSMS_3.0*<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0_cp.dot<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0_cp.txt<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0_distance.dot<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0_duck.dot<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0_duck.txt<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0_fuzzy.dot<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0.out<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0_overlap.dot<br/>
+         esp_1THL_MSMS_3.0-1TMN_MSMS_3.0.xml<br/></div></td>
+    </tr></table>
+    <hr/>
+    <p class="author">
+    created by <a href="http://teachme.tuwien.ac.at/surfcomp/tutorials/chofbaue@qpsr03.tuwien.ac.at">Christian Hofbauer</a>
+    - last change: 06.09.2004</p>
+    </body></html>
+

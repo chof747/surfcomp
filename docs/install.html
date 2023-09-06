@@ -1,0 +1,195 @@
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SURFCOMP installation instructions</title>
+    <link href="surfcomp.css" media="screen" rel="stylesheet" type="text/css"/></head>
+  <body>
+  <h1 class="title">
+    <img src="img/logo_left.png" width="64" border="0" align="middle">
+    The SURFCOMP program suite
+    <img src="img/logo_right.png" width="64" border="0" align="middle"></h1>
+
+  <p>
+    published under the
+    <a href="novartis_opensource_license.html">NOVARTIS OPEN SOURCE license</a></p>
+
+  <hr/>
+
+  <table cellspacing="5" cellpadding="10">
+    <tr>
+      <td bgcolor="#c5e4ff" valign="top" width="200">
+        <p>
+          <a href="index.html">Home</a></p>
+        <p>
+          <a href="authors.html">Authors</a></p>
+        <p>
+          <a href="download.html">Download</a><br/>
+          <strong>Installation Instructions</strong></p>
+        <p>
+          <a href="literature.html">Literature</a><br/>
+          Documentation:<br/>
+          &nbsp;&nbsp;<a href="userdoc.html">User documentation</a><br/>
+          &nbsp;&nbsp;<a href="tutorials_main.html">Tutorials</a><br/>
+          &nbsp;&nbsp;<a href="gallery.html">Image Gallery</a></p>
+        <p>
+          </p>
+        </td>
+
+      <td valign="top">
+        <p>
+          You can install <span class="logo">surfcomp</span> via three different ways: You
+          can
+          <ol>
+            <li>
+              use a <a href="install.html#rpm">distribution specific installation</a> package,</li>
+            <li>
+              create an installation package <a href="install.html#srcrpm">from the source
+              packages</a> or</li>
+            <li>
+              <a href="install.html#source">compile and install</a> from the source tarballs.</li></ol>
+
+          The source tarballs provide the greatest flexibility but demand the greatest
+          care and skills. The first option is more fail-proof but maybe not available for
+          your Linux distribution. In that case you have to use option 2 first to create
+          an RPM package set for your specific setup.</p>
+        <p>
+          This page also explains how to <a href="install.html#install_sybyl">register the Sybyl
+          module</a> of SURFCOMP.</p>
+        <p>
+          Information about the <a href="install.html#monitor">installation of the surfcomp-monitor</a>
+          program can be found at the end of this page.</p>
+
+        <h2>
+          <a name="rpm"></a>
+          Distribution RPM packages</h2>
+        <p>
+          You must have installed all the <a href="download.html#requirements">required
+          external packages</a> for your system and you must be logged in as
+          <code>root</code>.</p>
+        <ol>
+          <li>
+            Unpack the tarball for your system into any empty directory</li>
+          <li>
+            Then change into that directory and call the script
+            <code>install.sh</code>.</li></ol>
+
+        <p>
+          Thats all, the program suite is now ready to use.</p>
+
+        <h2>
+          <a name="srcrpm"></a>
+          Source RPM packages</h2>
+        <p>
+          You must have installed all the <a href="download.html#requirements">required
+          external packages</a> for your system and you must be logged in as
+          <code>root</code>.</p>
+        <ol>
+          <li>
+            Unpack the tarball for your system into any empty directory</li>
+          <li>
+            Then change into that directory and call the script
+            <code>rebuild.sh DESTDIR</code>. <code>DESTDIR</code> is the path where the
+            binary RPMs for your system should be placed.</li>
+          <li>
+            If all sources could be compiled successfully you can find a complete
+            installation set for your distribution under <code>DESTDIR</code> including a
+            README and the install script.</li>
+          <li>
+            Process with the steps described for the <a href="install.html#rpm">distribution RPM
+            packages</a></li></ol>
+
+        <p>
+          <span class="software">If you think that the packages for your distribution are useful for other
+          users I would appreciate if you
+          <a href="mailto:christian.hofbauer@pharma.novartis.com">send us the files</a>
+          and we put it on the webpage.</span></p>
+
+        <h2>
+          <a name="source"></a>
+          Compile and Install from Source Tarballs</h2>
+
+        <p>
+          The source files are organized by
+          <a href="http://www.gnu.org/software/autoconf/">autoconf</a> and
+          <a href="http://www.gnu.org/software/automake/">automake</a>. You can therefore
+          compile and install each package by the following command sequence:</p>
+
+        <div class="code">
+          % gunzip <font color="darkGreen">PACKAGE</font>.tar.gz<br/>
+          % tar fx <font color="darkGreen">PACKAGE</font>.tar<br/>
+          % cd <font color="darkGreen">PACKAGE</font><br/>
+          % ./configure <br/>
+          % make<br/>
+          % make install</div>
+
+        <p>
+          In order to avoid large specifications of the locations of all required packages
+          we recommend to compile and immediately install the packages in the following
+          order:
+          <ol type="a">
+            <li>
+              RazorBack, bestrot, graph-algorithms, xmlutils</li>
+            <li>
+              libsurface, trimesh</li>
+            <li>
+              libsurfcomp</li>
+            <li>
+              surfcomp, surfcomp-control, surfcomp-monitor</li></ol>
+          (Packages under the same number can be installed in any arbitrary sequence.)
+          Please refer to the INSTALL files of these packages to learn about the special
+          flags and additional build possibilities.</p>
+
+         <h2>
+           <a name="install_sybyl"></a>
+           Register the Sybyl module</h2>
+         <p>
+           To register the Sybyl module add the following lines to the
+           <code>.sybylrc</code> file in your home directory:</p>
+
+         <div class="code">
+           setvar DUCKHOME
+           <font color="DarkGreen">PREFIX</font>/share/surfcomp-control/sybyl<br/><br/>
+           uims load $DUCKHOME/active_site.spl<br/>
+           uims load $DUCKHOME/duckCompare.spl</div>
+
+         where <font color="DarkGreen"><code>PREFIX</code></font> is the installation
+         prefix of the surfcomp-control packages (usually /usr).
+
+        <h2>
+          <a name="monitor"></a>
+          Install <span clas="logo">surfcomp-monitor</span></h2>
+        <p>
+          For the installation of the <span clas="logo">surfcomp-monitor</span> you have
+          the same choices as for the rest of the program suite: binary and source RPMs
+          and a source-code tarball. Please look into the instructions above to learn how
+          to use each of these options. In addition to this you have to install the
+          <span clas="logo">surfcomp-monitor</span> as a plug-in for the Geomview
+          application.</p>
+        <p>
+          To install the <span clas="logo">surfcomp-monitor</span> as a plug-in of
+          Geomview you have to create an appropriate entry in the private or system-wide
+          configuration file of geomview. Add the line
+          <div class="code">
+            (emodule-define "surfcomp-monitor" "surfcomp-monitor <font color="darkGreen">
+            MYSQL_SERVER MYSQL_USER</font>)</div>
+          either to the file
+          <ul>
+            <li>
+              <code>.geomview</code> in your home directory or to </li>
+            <li>
+              <code>.geomview</code> in  Geomview's system directory (<code>/usr/share/geomview
+              </code> on my system).</li>
+              </ul>
+           <font color="darkGreen">MYSQL_SERVER</font> and <font color="darkGreen">
+           MYSQL_USER</font> are the name of the MySQL server and MySQL user which are
+           used to access the experiment databases. Further information about the
+           installation of plug-in modules in Geomview can be found in the
+           <a href="http://www.geomview.org/docs/html/geomview_64.html">Geomview
+           manual</a>.</p></td>
+
+    </tr></table>
+    <hr/>
+	<p class="author">
+	  created by <a href="http://teachme.tuwien.ac.at/surfcomp/chofbaue@qpsr03.tuwien.ac.at">Christian Hofbauer</a>
+	  - last change: 06.09.2004</p></body></html>
+

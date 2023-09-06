@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>SURFCOMP - doc - msmsprepare</title>
+    <link href="../surfcomp.css" media="screen" rel="stylesheet" type="text/css"/></head>
+  <body>
+  <h1 class="title">
+    <img src="../img/logo_left.png" width="64" border="0" align="middle">
+    The SURFCOMP program suite
+    <img src="../img/logo_right.png" width="64" border="0" align="middle"></h1>
+
+  <table cellspacing="5" cellpadding="10">
+    <tr>
+      <td bgcolor="#c5e4ff" valign="top" width="200">
+        <p>
+          <a href="../index.html">Home</a></p>
+        <p>
+          <a href="../authors.html">Authors</a></p>
+        <p>
+          <a href="../download.html">Download</a><br/>
+          <a href="../install.html">Installation Instructions</a></p>
+        <p>
+          <a href="../literature.html">Literature</a><br/>
+          Documentation:<br/>
+          &nbsp;&nbsp;<a href="../userdoc.html">User documentation</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="msmsprepare.html">msmsprepare</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<strong>preparesurfcomp</strong><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfaceconvert.html">surfaceconvert</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfcomp.html">surfcomp</a><br/>
+          &nbsp;&nbsp;&nbsp;&nbsp;<a href="surfinfo.html">surfinfo</a><br/>
+          <br/>
+          &nbsp;&nbsp;<a href="../tutorials_main.html">Tutorials</a><br/>
+          &nbsp;&nbsp;<a href="../gallery.html">Image Gallery</a></p>
+        <p>
+          </p>
+        </td>
+
+      <td valign="top">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+  <li><a href="preparesurfcomp.html#name">NAME</a></li>
+  <li><a href="preparesurfcomp.html#synopsis">SYNOPSIS</a></li>
+  <li><a href="preparesurfcomp.html#options">OPTIONS</a></li>
+  <li><a href="preparesurfcomp.html#description">DESCRIPTION</a></li>
+  <ul>
+
+    <li><a href="preparesurfcomp.html#input_data_structure">INPUT DATA STRUCTURE</a></li>
+    <li><a href="preparesurfcomp.html#script_template">SCRIPT TEMPLATE</a></li>
+  </ul>
+
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name"></a>NAME</h1>
+<p>preparesurfcomp</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis"></a>SYNOPSIS</h1>
+<p>A script that prepares SURFCOMP experiments</p>
+<p><strong>preparesurfcomp [ --help --man|m ]</strong>
+                  <strong>--host|h</strong> <em>DATABASE_HOST</em> <strong>--user|u</strong> <em>DB_USER</em> <strong>--passwd|p</strong>
+                  <strong>--group|g</strong> <em>GROUPNAME</em> <strong>--path</strong> <em>DATAPATH</em> <strong>--full|f</strong>
+                  <strong>--format</strong> <em>FILE_FORMAT</em>
+                  <strong>--probe</strong> <em>PROBE_RADIUS</em> <strong>--radius|r</strong> <em>PATCH_RADIUS</em>
+                  <strong>--rotstep</strong> <em>ROTATION_STEP</em> <strong>--resolution</strong> &lt;HSI_RESOLUTION&gt;
+                  <strong>--hyphen</strong> <em>#NAME_PARTS</em> <strong>--script|s</strong> <em>RUNSCRIPT</em></p>
+<p>
+</p>
+<hr />
+<h1><a name="options"></a>OPTIONS</h1>
+<dl>
+<dt><strong><a name="item__2d_2dhelp"></a>--help</strong><br />
+</dt>
+<dd>
+print out this help page.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dman"></a>--man</strong><br />
+</dt>
+<dd>
+print out a detailed help page as manpage
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dhost_7ch__5bdefault_3dcurrent_machine_5d"></a>
+  --host|h [default=<em>current machine</em>]</strong><br />
+</dt>
+<dd>
+The MYSQL database host where the experimental database should be created and
+stored. You can either use short names or full qualified names.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2duser_7cu__5bdefault_3dcurrent_user_5d"></a>
+  --user|u [default=<em>current user</em>]</strong><br />
+</dt>
+<dd>
+The name of the database user that should be used for the DB operations. If the
+user has a password you have to give the option <strong>-p</strong> or <strong>--passwd</strong> as well.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dpasswd_7cp"></a>
+  --passwd|p</strong><br />
+</dt>
+<dd>
+If this flag is specified the script prompts for the MYSQL password of the
+given user
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dgroup_7cg"></a>--group|g</strong><br />
+</dt>
+<dd>
+The name of the group of experiments that will be prepared by the script. The
+groupname will be used as the name of the experimental database.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dpath__5bdefault_3d_2e_5d"></a>
+--path [default=<em>.</em>]</strong><br />
+</dt>
+<dd>
+The path of the input data for the experiments can be found. (see also
+<a href="preparesurfcomp.html#input_data_structure">INPUT DATA STRUCTURE</a>)
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dfull_7cf"></a>--full|f</strong><br />
+</dt>
+<dd>
+If this flag is specified a full comparison experiment (not regarding any
+surface sites) is created for each pair of surfaces.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dformat__5bdefault_3down_5d"></a>
+  --format [default=<em>own</em>]</strong><br />
+</dt>
+<dd>
+The file format of the surface files. Possible values are off, <em>own</em>, msms and
+sld. Please note that the specification of the format determines the name of
+the directory where the surface files are expected.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dprobe__5bdefault_3d1_2e4_angs_2e_5d"></a>
+  --probe [default=<em>1.4 Angs.</em>]</strong><br />
+</dt>
+<dd>
+The size of the probe sphere that was used to create the molecular
+surfaces. This parameter is for information purposes only and can be left as is
+or set to any value if no solvent accessible surfaces have been used.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dradius_7cr__5bdefault_3d3_2e8_angs_2e_5d"></a>
+  --radius|r [default=<em>3.8 Angs.</em>]</strong><br />
+</dt>
+<dd>
+The radius of the surface patches. Values between 3.5 and 6 Angs. are
+appropriate.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2drotstep__5bdefault_3d2_c2_b0_5d"></a>
+  --rotstep [default=<em>2°</em>]</strong><br />
+</dt>
+<dd>
+The size of an angular rotation step in the harmonic shape image
+filtering. This parameter need not be specified in almost any cases.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dresolution__5bdefault_3d13_5d"></a>
+  --resolution [default=<em>13</em>]</strong><br />
+</dt>
+<dd>
+Lateral resolution of the harmonic shape images. Any value between 11 and 15
+will be fine.
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dhyphen__5bdefault_3d1_5d"></a>
+  --hyphen [default=<em>1</em>]</strong><br />
+</dt>
+<dd>
+Determines how many parts of the surface names will be used for the experiment
+names (see below).
+</dd>
+<p></p>
+<dt><strong><a name="item__2d_2dscript_7cs__5bdefault_3d_28datadir_29_2frun_"></a>
+  --script|s [default=<em>(datadir)/run.sh.in</em>]</strong><br />
+</dt>
+<dd>
+The script template for the generation of then surfcomp run script.
+</dd>
+<p></p></dl>
+<p>
+</p>
+<hr />
+<h1><a name="description"></a>DESCRIPTION</h1>
+<p>The <strong>preparesurfcomp</strong> script builds the experimental database for the
+comparison of a set of surfaces and surface sites which are stored in a given
+input data directory. It can also generate a shell script that can invoke
+<strong>surfcomp</strong> for all experiments. It therefore simplifies to a large extend the
+preparation of <strong>surfcomp</strong> computations.</p>
+<p>Although a lot of parameters can be specified, those that have only a long name
+can usually be omitted. And most of the other parameters are have quite
+reasonable defaults.</p>
+<p>
+</p>
+<h2><a name="input_data_structure"></a>INPUT DATA STRUCTURE</h2>
+<p>The script expects surface files, surface point data files, structure
+files and maybe center descriptions. All these files have to be stored in the
+correct directory structure:</p>
+<pre>
+   /
+   +-center           (the surface site sphere descriptions)
+   +-data             (the surface point data files)
+   +-pdb              (the structure file for each surface)
+   +-own|msms|sld|off (the surface files in the correct format)</pre>
+<p>
+</p>
+<h2><a name="script_template"></a>SCRIPT TEMPLATE</h2>
+<p>The final step of the preparation is the generation of a run script that
+automatically invokes <strong>surfcomp</strong> for all generated experiments. This is
+usually a shell script (Bourne or C-shell) but can as well be written in any
+other scripting language. <strong>preparesurfcomp</strong> uses a template file to generate
+this script. Such a template file contains all the commands and parameter
+definitions that are necessary for the execution of the <strong>surfcomp</strong> program.</p>
+<p>In this template three placeholders will be replaced by the appropriate values
+for the generated group of experiments:</p>
+<dl>
+<dt><strong><a name="item__40dbhost_40"></a>@DBHOST@</strong><br />
+</dt>
+<dd>
+will be replaced by the name of the database host where the experiment database
+is stored.
+</dd>
+<p></p>
+<dt><strong><a name="item__40db_40"></a>@DB@</strong><br />
+</dt>
+<dd>
+the name of the experiment database (actually the group name).
+</dd>
+<p></p>
+<dt><strong><a name="item__40experiments_40"></a>@EXPERIMENTS@</strong><br />
+</dt>
+<dd>
+the list of experiment IDs that have been created in the current group.
+</dd>
+<p></p></dl>
+<p>A special task of the run script is the definition of the various filter
+thresholds and data columns. Please referre to <a href="surfcomp.html">
+surfcomp(1)</a> for the exact specfications of those parameters.
+
+</p>
+<p>The default installation includes a basic Bourne- and C-shell script which
+invoke surcomp on the local machine with a basic set of filter heuristics I use
+usually for the comparison of small molecular surfaces. Any other script
+template can be defined and passed to the program by the 
+<a href="preparesurfcomp.html#item__2d_2dscript_7cs__5bdefault_3d_28datadir_29_2frun_">
+<strong>--script|s</strong></a>
+parameter.
+</p>
+
+        </td>
+    </tr></table>
+    <hr/>
+	<p class="author">
+	  created by <a href="http://teachme.tuwien.ac.at/surfcomp/doc/chofbaue@qpsr03.tuwien.ac.at">Christian Hofbauer</a>
+	  - last change: 06.09.2004</p></body></html>
+
